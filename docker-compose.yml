@@ -1,0 +1,15 @@
+version: '3.8' #Specifies the version of the Docker Compose file.
+
+services: #Describes the services that make up your application.
+  app:
+    build: .  # Specifies that the Docker image for the app service should be built from the current directory (.).
+    ports:
+      - '8080:80'  #: Maps the host machine's port 8080 to the container's port 80. This means you can access the application running inside the app container on http://localhost:8080.
+
+    depends_on:  #Specifies that the app service depends on the redis service. This ensures that Docker Compose starts the redis service before the app service.
+      - redis
+  redis:
+    image: "redis:latest"  # Specifies the Docker image to use for the redis service. In this case, it uses the latest version of the official Redis image from Docker Hub.
+    ports:                 #Maps the host machine's port 6379 to the container's port 6379. This allows external applications or services to connect to Redis running inside the redis container.
+      - "6379:6379"
+
